@@ -17,14 +17,14 @@ function validateUsername() {
 classList.add("is-invalid");
         document.getElementById("usernameError").textContent = "Nombre de usuario debe tener al menos 5 caracteres";
     } 
-    }
+    
 else {
         username.classList.remove("is-invalid");
         
        
 document.getElementById("usernameError").textContent = "";
     }
-   
+}
 // Función para validar el correo electrónico
 function validateEmail() {
     const emailValue = email.value.trim();
