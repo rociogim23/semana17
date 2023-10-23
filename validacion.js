@@ -91,7 +91,7 @@ function enableSubmitButton() {
     const isGenderValid = gender.value !== "";
     const isCountryValid = country.value !== "";
 
-    submitButton.disabled = !(isUsernameValid && isEmailValid && isPasswordValid && isAddressValid && isGenderValid && isCountryValid);
+    submitButton = !(isUsernameValid && isEmailValid && isPasswordValid && isAddressValid && isGenderValid && isCountryValid);
 }
 
 // Agrega eventos a los campos para realizar las validaciones en tiempo real
