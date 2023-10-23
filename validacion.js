@@ -12,12 +12,12 @@ const submitButton = document.getElementById("submitButton");
 function validateUsername() {
     const usernameValue = username.value.trim();
     if (usernameValue.length < 5) {
-        username.
-        username
-classList.add("is-invalid");
-        document.getElementById("usernameError").textContent = "Nombre de usuario debe tener al menos 5 caracteres";
-    } 
-    
+        username.classList.add("is-invalid");
+        
+       
+    document.getElementById("usernameError").textContent = "Nombre de usuario debe tener al menos 5 caracteres";
+    }
+
 else {
         username.classList.remove("is-invalid");
         
