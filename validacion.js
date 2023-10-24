@@ -62,14 +62,18 @@ document.getElementById("passwordError").textContent = "";
 function validateAddress() {
     const addressValue = address.value.trim();
     const [calle, numero] = addressValue.split(" ");
+    
     if (!calle || !numero) {
         address.classList.add("is-invalid");
-        document.getElementById("addressError").textContent = "Los campos de dirección deben estar completos";
+        document.getElementById("addressError").textContent = "Por favor, complete la dirección correctamente";
+        return false; // La dirección es inválida
     } else {
         address.classList.remove("is-invalid");
         document.getElementById("addressError").textContent = "";
+        return true; // La dirección es válida
     }
 }
+
   
 // Función para validar el género
 function validateGender() {
@@ -87,11 +91,11 @@ function enableSubmitButton() {
     const isUsernameValid = username.value.trim().length >= 5;
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
     const isPasswordValid = password.value.trim().length >= 8;
-    const isAddressValid = validateAddress();
+    const isAddressValid = validateAddress(); // Utiliza la función para validar la dirección
     const isGenderValid = gender.value !== "";
     const isCountryValid = country.value !== "";
 
-    submitButton = !(isUsernameValid && isEmailValid && isPasswordValid && isAddressValid && isGenderValid && isCountryValid);
+    submitButton.disabled = !(isUsernameValid && isEmailValid && isPasswordValid && isAddressValid && isGenderValid && isCountryValid);
 }
 
 // Agrega eventos a los campos para realizar las validaciones en tiempo real
