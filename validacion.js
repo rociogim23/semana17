@@ -101,3 +101,24 @@ password.addEventListener("input", validatePassword);
 address.addEventListener("input", validateAddress);
 gender.addEventListener("input", validateGender);
 form.addEventListener("input", enableSubmitButton);
+
+function alert(mensaje){
+    alert(mensaje);
+}
+
+form.addEventListener("submit", function(event) {
+    validateUsername();
+    validateEmail();
+    validatePassword();
+    validateAddress();
+    validateGender();
+
+    if (username.classList.contains("is-invalid") || 
+    email.classList.contains("is-invalid") || 
+    password.classList.contains("is-invalid") || 
+    address.classList.contains ("is-invalid") || 
+    gender.classList.contains("is-invalid")) {
+        alert("Por favor, complete los campos");
+        event.preventDefault();
+    }}
+    );
