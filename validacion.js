@@ -4,6 +4,7 @@ const username = document.getElementById("username");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const address = document.getElementById("address");
+const addressN = document.getElementById("addressN"); // Agregado para el campo Nº
 const gender = document.getElementById("gender");
 const country = document.getElementById("country");
 const submitButton = document.getElementById("submitButton");
@@ -13,26 +14,19 @@ function validateUsername() {
     const usernameValue = username.value.trim();
     if (usernameValue.length < 5) {
         username.classList.add("is-invalid");
-        
-       
-    document.getElementById("usernameError").textContent = "Nombre de usuario debe tener al menos 5 caracteres";
-    }
-
-else {
+        document.getElementById("usernameError").textContent = "Nombre de usuario debe tener al menos 5 caracteres";
+    } else {
         username.classList.remove("is-invalid");
-        
-       
-document.getElementById("usernameError").textContent = "";
+        document.getElementById("usernameError").textContent = "";
     }
 }
+
 // Función para validar el correo electrónico
 function validateEmail() {
     const emailValue = email.value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(emailValue)) {
-        email.
-       
-classList.add("is-invalid");
+        email.classList.add("is-invalid");
         document.getElementById("emailError").textContent = "Correo electrónico debe tener un formato válido";
     } else {
         email.classList.remove("is-invalid");
@@ -43,38 +37,30 @@ classList.add("is-invalid");
 // Función para validar la contraseña
 function validatePassword() {
     const passwordValue = password.value.trim();
-    
-   
-if (passwordValue.length < 8) {
+    if (passwordValue.length < 8) {
         password.classList.add("is-invalid");
         document.getElementById("passwordError").textContent = "La contraseña debe tener al menos 8 caracteres";
     } else {
-        password.
-       
-classList.remove("is-invalid");
-        
-       
-document.getElementById("passwordError").textContent = "";
+        password.classList.remove("is-invalid");
+        document.getElementById("passwordError").textContent = "";
     }
 }
 
 // Función para validar la dirección
 function validateAddress() {
     const addressValue = address.value.trim();
-    const [calle, numero] = addressValue.split(" ");
-    
-    if (!calle || !numero) {
+    const addressNValue = addressN.value.trim();
+    if (!addressValue || !addressNValue) {
         address.classList.add("is-invalid");
+        addressN.classList.add("is-invalid"); // Agregado para el campo Nº
         document.getElementById("addressError").textContent = "Por favor, complete la dirección correctamente";
-        return false; // La dirección es inválida
     } else {
         address.classList.remove("is-invalid");
+        addressN.classList.remove("is-invalid"); // Agregado para el campo Nº
         document.getElementById("addressError").textContent = "";
-        return true; // La dirección es válida
     }
 }
 
-  
 // Función para validar el género
 function validateGender() {
     if (gender.value === "") {
@@ -91,24 +77,48 @@ function enableSubmitButton() {
     const isUsernameValid = username.value.trim().length >= 5;
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
     const isPasswordValid = password.value.trim().length >= 8;
-    const isAddressValid = validateAddress(); // Utiliza la función para validar la dirección
+    const isAddressValid = address.value.trim() !== "" && addressN.value.trim() !== "";
     const isGenderValid = gender.value !== "";
-    const isCountryValid = country.value !== "";
+    const isCountryValid = country.value !== "Seleccionar"; // Modificado para considerar la opción "Seleccionar"
 
-    submitButton.disabled = !(isUsernameValid && isEmailValid && isPasswordValid && isAddressValid && isGenderValid && isCountryValid);
+    if (isUsernameValid && isEmailValid && isPasswordValid && isAddressValid && isGenderValid && isCountryValid) {
+        submitButton.disabled = false; // Habilita el botón
+    } else {
+        submitButton.disabled = true; // Deshabilita el botón
+    }
 }
+
 
 // Agrega eventos a los campos para realizar las validaciones en tiempo real
-username.addEventListener("input", validateUsername);
-email.addEventListener("input", validateEmail);
-password.addEventListener("input", validatePassword);
-address.addEventListener("input", validateAddress);
-gender.addEventListener("input", validateGender);
-form.addEventListener("input", enableSubmitButton);
+username.addEventListener("input", function() {
+    validateUsername();
+    enableSubmitButton();
+});
 
-function alert(mensaje){
-    alert(mensaje);
-}
+email.addEventListener("input", function() {
+    validateEmail();
+    enableSubmitButton();
+});
+
+password.addEventListener("input", function() {
+    validatePassword();
+    enableSubmitButton();
+});
+
+address.addEventListener("input", function() {
+    validateAddress();
+    enableSubmitButton();
+});
+
+addressN.addEventListener("input", function() {
+    validateAddress();
+    enableSubmitButton();
+});
+
+gender.addEventListener("input", function() {
+    validateGender();
+    enableSubmitButton();
+});
 
 form.addEventListener("submit", function(event) {
     validateUsername();
@@ -117,12 +127,19 @@ form.addEventListener("submit", function(event) {
     validateAddress();
     validateGender();
 
-    if (username.classList.contains("is-invalid") || 
-    email.classList.contains("is-invalid") || 
-    password.classList.contains("is-invalid") || 
-    address.classList.contains ("is-invalid") || 
-    gender.classList.contains("is-invalid")) {
-        alert("Por favor, complete los campos");
+    if (
+        username.classList.contains("is-invalid") ||
+        email.classList.contains("is-invalid") ||
+        password.classList.contains("is-invalid") ||
+        address.classList.contains("is-invalid") ||
+        addressN.classList.contains("is-invalid") || // Agregado para el campo Nº
+        gender.classList.contains("is-invalid")
+    ) {
+        showAlert("Por favor, complete los campos");
         event.preventDefault();
-    }}
-    );
+    }
+});
+
+function showAlert(mensaje) {
+    alert(mensaje);
+}
